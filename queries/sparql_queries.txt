@@ -1,0 +1,107 @@
+
+1.
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX vocab: <http://id.nlm.nih.gov/mesh/vocab#>
+SELECT ?qualifierURI ?qualifierLabel ?treeNumberURI ?treeNumberLabel
+WHERE {
+  mesh:D015815 vocab:allowableQualifier ?qualifierURI .
+  OPTIONAL { ?qualifierURI rdfs:label ?qualifierLabel . }
+  ?qualifierURI vocab:treeNumber ?treeNumberURI .
+}
+
+
+2.
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX vocab: <http://id.nlm.nih.gov/mesh/vocab#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+
+SELECT ?term ?prefLabelValue ?dateCreatedValue
+WHERE {
+  mesh:D015815 vocab:preferredTerm ?term .
+
+  ?term vocab:prefLabel ?prefLabelValue .
+  ?term vocab:dateCreated ?dateCreatedValue .
+}
+
+3.
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX vocab: <http://id.nlm.nih.gov/mesh/vocab#>
+
+SELECT DISTINCT ?classType ?activeValue
+WHERE {
+  ?subject vocab:active ?activeValue .
+    ?subject rdf:type ?classType .
+}
+ORDER BY ?classType
+
+
+
+4.
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX vocab: <http://id.nlm.nih.gov/mesh/vocab#>
+SELECT ?concept ?identifierValue
+WHERE {
+  mesh:D015815 (vocab:concept|vocab:preferredConcept) ?concept .
+  ?concept vocab:identifier ?identifierValue .
+}
+
+5.
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX vocab: <http://id.nlm.nih.gov/mesh/vocab#>
+SELECT DISTINCT ?ontologyClass
+WHERE {
+  ?ontologyClass rdf:type owl:Class .
+}
+ORDER BY ?ontologyClass
+
+
+
+6.
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX vocab: <http://id.nlm.nih.gov/mesh/vocab#>
+
+SELECT DISTINCT ?property ?propertyType
+WHERE {
+  { ?property rdf:type owl:ObjectProperty . BIND("Object Property" AS ?propertyType) }
+  UNION
+  { ?property rdf:type owl:DatatypeProperty . BIND("Datatype Property" AS ?propertyType) }
+  UNION
+  { ?property rdf:type owl:AnnotationProperty . BIND("Annotation Property" AS ?propertyType) }
+}
+ORDER BY ?propertyType
+
+
+7.
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX vocab: <http://id.nlm.nih.gov/mesh/vocab#>
+
+SELECT ?qualifierURI ?qualifierAnnotation
+WHERE {
+  mesh:D015815 vocab:allowableQualifier ?qualifierURI .
+  OPTIONAL {
+    ?qualifierURI vocab:annotation ?qualifierAnnotation .
+  }
+}
+
